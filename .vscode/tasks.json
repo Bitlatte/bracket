@@ -1,0 +1,33 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build",
+      "command": "${workspaceFolder}/build.sh",
+      "windows": {
+        "command": "${workspaceFolder}/build.bat"
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "Start",
+      "type": "shell",
+      "command": "start",
+      "args": [
+        "./build/Bracket"
+      ],
+      "windows": {
+        "args": [
+          "./build/Bracket.exe"
+        ]
+      },
+      "group": {
+        "kind": "none"
+      },
+      "problemMatcher": []
+    }
+  ]
+}
