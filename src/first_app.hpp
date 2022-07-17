@@ -4,6 +4,7 @@
 #include "bracket_pipeline.hpp"
 #include "bracket_device.hpp"
 #include "bracket_swap_chain.hpp"
+#include "bracket_model.hpp"
 
 #include <memory>
 #include <vector>
@@ -23,6 +24,8 @@ namespace bracket {
       void run();
 
     private:
+      void sierpinski(std::vector<BracketModel::Vertex> &vertices, int depth, glm::vec2 left, glm::vec2 right, glm::vec2 top);
+      void loadModels();
       void createPipelineLayout();
       void createPipeline();
       void createCommandBuffers();
@@ -34,5 +37,6 @@ namespace bracket {
       std::unique_ptr<BracketPipeline> bracketPipeline;
       VkPipelineLayout pipelineLayout;
       std::vector<VkCommandBuffer> commandBuffers;
+      std::unique_ptr<BracketModel> bracketModel;
   };
 }
