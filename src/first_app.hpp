@@ -3,6 +3,10 @@
 #include "bracket_window.hpp"
 #include "bracket_pipeline.hpp"
 #include "bracket_device.hpp"
+#include "bracket_swap_chain.hpp"
+
+#include <memory>
+#include <vector>
 
 namespace bracket {
   class App {
@@ -10,15 +14,25 @@ namespace bracket {
       static constexpr int WIDTH = 800;
       static constexpr int HEIGHT = 600;
 
+      App();
+      ~App();
+
+      App(const App &) = delete;
+      App &operator=(const App &) = delete;
+
       void run();
 
     private:
-      BracketWindow BracketWindow{WIDTH, HEIGHT, "Hello Vulkan!"};
-      BracketDevice bracketDevice{BracketWindow};
-      BracketPipeline BracketPipeline{
-        bracketDevice,
-        "../src/shaders/simple_shader.vert.spv",
-        "../src/shaders/simple_shader.frag.spv",
-        BracketPipeline::defaultPipelineConfigInfo(WIDTH, HEIGHT)};
+      void createPipelineLayout();
+      void createPipeline();
+      void createCommandBuffers();
+      void drawFrame();
+
+      BracketWindow bracketWindow{WIDTH, HEIGHT, "Bracket Studio"};
+      BracketDevice bracketDevice{bracketWindow};
+      BracketSwapChain bracketSwapChain{bracketDevice, bracketWindow.getExtent()};
+      std::unique_ptr<BracketPipeline> bracketPipeline;
+      VkPipelineLayout pipelineLayout;
+      std::vector<VkCommandBuffer> commandBuffers;
   };
 }

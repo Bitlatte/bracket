@@ -10,7 +10,6 @@ namespace bracket {
   struct PipelineConfigInfo {
     VkViewport viewport;
     VkRect2D scissor;
-    VkPipelineViewportStateCreateInfo viewportInfo;
     VkPipelineInputAssemblyStateCreateInfo inputAssemblyInfo;
     VkPipelineRasterizationStateCreateInfo rasterizationInfo;
     VkPipelineMultisampleStateCreateInfo multisampleInfo;
@@ -25,9 +24,9 @@ namespace bracket {
   class BracketPipeline {
     public:
       BracketPipeline(
-        BracketDevice &device,
-        const std::string &vertFilepath, 
-        const std::string &fragFilepath,
+        BracketDevice& device,
+        const std::string& vertFilepath, 
+        const std::string& fragFilepath,
         const PipelineConfigInfo& configInfo);
 
       ~BracketPipeline();
@@ -35,16 +34,18 @@ namespace bracket {
       BracketPipeline(const BracketPipeline&) = delete;
       void operator=(const BracketPipeline&) = delete;
 
+      void bind(VkCommandBuffer commandBuffer);
+
       static PipelineConfigInfo defaultPipelineConfigInfo(uint32_t width, uint32_t height);
 
     private:
-      static std::vector<char> readFile(const std::string &filePath);
+      static std::vector<char> readFile(const std::string& filePath);
       void createGraphicsPipeline(
-        const std::string &vertFilepath,
-        const std::string &fragFilepath,
+        const std::string& vertFilepath,
+        const std::string& fragFilepath,
         const PipelineConfigInfo& configInfo);
 
-      void createShaderModule(const std::vector<char> &code, VkShaderModule *shaderModule);
+      void createShaderModule(const std::vector<char>& code, VkShaderModule* shaderModule);
 
       BracketDevice& bracketDevice;
       VkPipeline graphicsPipeline;

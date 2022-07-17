@@ -23,11 +23,11 @@ struct QueueFamilyIndices {
 
 class BracketDevice {
  public:
-#ifdef NDEBUG
-  const bool enableValidationLayers = false;
-#else
-  const bool enableValidationLayers = true;
-#endif
+  #ifdef NDEBUG
+    const bool enableValidationLayers = false;
+  #else
+    const bool enableValidationLayers = true;
+  #endif
 
   BracketDevice(BracketWindow &window);
   ~BracketDevice();
@@ -104,4 +104,4 @@ class BracketDevice {
   const std::vector<const char *> deviceExtensions = {VK_KHR_SWAPCHAIN_EXTENSION_NAME};
 };
 
-}  // namespace lve
+}
